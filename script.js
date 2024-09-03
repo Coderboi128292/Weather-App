@@ -162,3 +162,10 @@ const updateDropdown = () => {
         recentCitiesDropdown.parentElement.removeChild(recentCitiesDropdown);
     }
 };
+
+// Event listener for the dropdown menu
+recentCitiesDropdown.addEventListener("change", () => {
+    if (recentCitiesDropdown.value) {
+        getWeatherDetails(recentCitiesDropdown.value);
+    }
+});
