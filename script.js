@@ -169,3 +169,19 @@ recentCitiesDropdown.addEventListener("change", () => {
         getWeatherDetails(recentCitiesDropdown.value);
     }
 });
+
+// Event listener for the search button
+searchButton.addEventListener("click", () => {
+    const cityName = cityDataInput.value.trim();
+    if (cityName) {
+        validateCity(cityName)
+            .then(validCityName => {
+                getWeatherDetails(validCityName);
+            })
+            .catch(error => {
+                alert("City not found! Please enter a valid city name.");
+            });
+    } else {
+        alert("Please enter a city name.");
+    }
+});
