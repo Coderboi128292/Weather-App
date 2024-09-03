@@ -134,3 +134,13 @@ const getWeatherByCoords = (latitude, longitude) => {
             alert("There was an error fetching the weather data for your location. Please try again.");
         });
 };
+
+// Function to add city to dropdown and store in local storage
+const addCityToDropdown = (cityName) => {
+    let recentCities = JSON.parse(localStorage.getItem("recentCities")) || [];
+    if (!recentCities.includes(cityName)) {
+        recentCities.push(cityName);
+        localStorage.setItem("recentCities", JSON.stringify(recentCities));
+    }
+    updateDropdown();
+};
