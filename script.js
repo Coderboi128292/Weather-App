@@ -204,3 +204,6 @@ currentLocationButton.addEventListener("click", () => {
         alert("Geolocation is not supported by your browser.");
     }
 });
+
+// Initialize dropdown on page load
+updateDropdown();
