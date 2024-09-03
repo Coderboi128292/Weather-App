@@ -1,2 +1,2 @@
 # Weather-App
-Making a Weather app using HTML, Tailwind CSS and Java Script
+Made a Weather app using HTML, Tailwind CSS and Java Script
