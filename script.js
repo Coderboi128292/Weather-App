@@ -32,3 +32,18 @@ const createWeatherCard = (cityName, weatherDataItem, index) => {
             </li>`;
     }
 };
+
+// Function to validate city name using OpenWeatherMap's Geocoding API
+const validateCity = (cityName) => {
+    const GEO_API_URL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+
+    return fetch(GEO_API_URL)
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0 && data[0].local_names && data[0].name.toLowerCase() === cityName.toLowerCase() && data[0].country) {
+                return data[0].name;
+            } else {
+                throw new Error("City not found");
+            }
+        });
+};
