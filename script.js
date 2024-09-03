@@ -144,3 +144,21 @@ const addCityToDropdown = (cityName) => {
     }
     updateDropdown();
 };
+
+// Function to update dropdown menu with recently searched cities
+const updateDropdown = () => {
+    let recentCities = JSON.parse(localStorage.getItem("recentCities")) || [];
+    recentCitiesDropdown.innerHTML = '<option value="">Select a recently searched city</option>';
+    recentCities.forEach(city => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        recentCitiesDropdown.appendChild(option);
+    });
+
+    if (recentCities.length > 0) {
+        document.querySelector(".weather-data-input").appendChild(recentCitiesDropdown);
+    } else if (recentCitiesDropdown.parentElement) {
+        recentCitiesDropdown.parentElement.removeChild(recentCitiesDropdown);
+    }
+};
