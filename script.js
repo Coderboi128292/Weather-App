@@ -185,3 +185,22 @@ searchButton.addEventListener("click", () => {
         alert("Please enter a city name.");
     }
 });
+
+// Event listener for the current location button
+currentLocationButton.addEventListener("click", () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                getWeatherByCoords(latitude, longitude);
+            },
+            (error) => {
+                console.error("Error getting location:", error);
+                alert("Unable to retrieve your location. Please ensure location services are enabled and try again.");
+            }
+        );
+    } else {
+        alert("Geolocation is not supported by your browser.");
+    }
+});
