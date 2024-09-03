@@ -47,3 +47,46 @@ const validateCity = (cityName) => {
             }
         });
 };
+
+// Function to fetch and display weather details
+const getWeatherDetails = (cityName) => {
+    const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}`;
+
+    fetch(WEATHER_API_URL)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cod !== "200") {
+                throw new Error("Weather data not found for the specified location.");
+            }
+
+            const distinctForecastDays = [];
+            const nextFiveDaysForecast = data.list.filter((forecast) => {
+                const forecastDate = new Date(forecast.dt_txt).getDate();
+                if (!distinctForecastDays.includes(forecastDate)) {
+                    distinctForecastDays.push(forecastDate);
+                    return true;
+                }
+                return false;
+            });
+
+            // Clear existing weather data
+            currentWeatherData.innerHTML = '';
+            weatherForecastCards.innerHTML = '';
+
+            // Create and display the main weather card
+            const mainWeatherCard = createWeatherCard(cityName, nextFiveDaysForecast[0], 0);
+            currentWeatherData.innerHTML = mainWeatherCard;
+
+            // Create and display the 5-day forecast cards
+            nextFiveDaysForecast.slice(1).forEach((forecast, index) => {
+                const forecastCard = createWeatherCard(cityName, forecast, index + 1);
+                weatherForecastCards.innerHTML += forecastCard;
+            });
+
+            addCityToDropdown(cityName);
+        })
+        .catch(error => {
+            console.error("Error fetching weather data:", error);
+            alert("There was an error fetching the weather data. Please check the city name and try again.");
+        });
+};
